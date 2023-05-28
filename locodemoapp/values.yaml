@@ -9,7 +9,7 @@ commands: []
 image:
   repository: kavinjaveriya/locodemoapp
   pullPolicy: Always
-  tag: ba49d8a
+  tag: 00443cf
 
 dockersecret value must in base4 encoded form:
 imagePullSecrets: []
