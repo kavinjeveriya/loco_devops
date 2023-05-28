@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  {{ if .Values.annotations -}}
+  annotations:
+  {{- range $conf, $value := .Values.annotations }}
+    {{$conf}}: {{ $value }}
+  {{- end }}
+  {{- end}}
+  {{ if .Values.labels -}}
+  labels:
+  {{- range $conf, $value := .Values.labels }}
+    {{$conf}}: {{ $value }}
+  {{- end }}
+  {{- end}}
+spec:
+  {{- if not .Values.autoscaling }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- toYaml .Values.matchLabels | nindent 6 }}
+  template:
+    metadata:
+      name: {{ .Values.name }}
+      labels:
+      {{- range $conf, $value := .Values.matchLabels }}
+        {{$conf}}: {{ $value }}
+      {{- end }}
+    spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets.name }}
+      {{- end}}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
+      containers:
+      - name: {{ .Values.name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.commands }}
+        command: {{.Values.commands}}
+        {{- end }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.containerPort }}
+          protocol: TCP
+{{- if .Values.livenessProbe }}
+        livenessProbe:
+{{ toYaml .Values.livenessProbe | indent 10 }}
+        {{- end}}
+{{- if .Values.readinessProbe }}
+        readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 10 }}        
+        {{- end}}
+        {{- if .Values.resources }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+         {{- end }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
