@@ -7,9 +7,9 @@ containerPort: 7000
 commands: []
 
 image:
-  repository: kavinjaveriya/locodemoapp
+  repository: 944708576171.dkr.ecr.ap-south-1.amazonaws.com/locodemoapp
   pullPolicy: Always
-  tag: 00443cf
+  tag: build-6e988a3-628d539
 
 dockersecret value must in base4 encoded form:
 imagePullSecrets: []
