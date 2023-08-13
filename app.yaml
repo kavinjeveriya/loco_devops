@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: test
-  namespace: locoapp
+  namespace: argocd
 spec:
   project: default
   source:
