@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test
+  namespace: locoapp
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kavinjeveriya/loco_devops.git
+    targetRevision: locohelm
+    path: locodemoapp
+    helm:
+      valueFiles: 
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: locoapp
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
