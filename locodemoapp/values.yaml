@@ -16,7 +16,7 @@ imagePullSecrets: []
   
 annotations:
   app: demoapp
-  argocd.argoproj.io/image-updater: true
+  #argocd.argoproj.io/image-updater: true
 
 labels:
   app: demoapp
