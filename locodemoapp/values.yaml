@@ -9,7 +9,7 @@ commands: []
 image:
   repository: 944708576171.dkr.ecr.ap-south-1.amazonaws.com/locodemoapp
   pullPolicy: Always
-  tag: BN.b53e752-CH.34effff
+  tag: BN.c3d578b-CH.4b16b1f
 
 dockersecret value must in base4 encoded form:
 imagePullSecrets: []
